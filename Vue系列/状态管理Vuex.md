@@ -42,10 +42,15 @@ const store = new Vuex.Store({
   }
 })
 ```
-2. mapGetters 将一个getter属性映射到本地计算属性当中
+2. mapGetters 将一个getter属性映射到本地**计算属性**ß当中
 
 ## 改变状态 mutation
 
 ## 异步改变状态 action
+函数接受一个 与store对象相同的副本,{state,commit}
+this.$store.dispatch() 分发 action
+mapActions() 将方法 映射到 分发action
+dispatch() 返回Promise·
 
 ## Module
+命名空间
