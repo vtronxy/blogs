@@ -46,11 +46,26 @@ Object.prototype.__proto__ === null
 ## 继承写法
 
 ```javascript
- function inherit(base,sub){
+ function inherit(Base,Sub){
      var F = function(){};
-     F.prototype = base.prototype;
-     sub.prototype = new F;
-     sub.prototype.constuctor = sub;
+     F.prototype = Base.prototype;
+     Sub.prototype = new F;
+     Sub.prototype.constuctor = Sub;
+     
+     /**
+     属性是代表[对象]的状态，属于对象私有
+     上面的代码 使用一个 空函数 F作为中转，
+     而不是
+     Sub.prototype = new Base
+     目前是避免耗费空间，将Base的成员属性在保存一份
+     */
+ }
+ //等效的写法
+ Sub.prototype = Object.create(Base.prototype);
+//在子类中 调用父的 构造器函数
+ function Sub (){
+     Base.call(this);
+     //子类[成员属性]的初始化
  }
 ```
 
@@ -59,9 +74,10 @@ Object.prototype.__proto__ === null
 
 >a intanceof A 工作原理 检查A.prototype 是否在a.__proto__原型链表上
 
-+ let a = new A,new操作符用于构建原型链
++ let a = new A,new操作符用于**构建原型链**
+> javascript 创建对象的方式是基于**原型**,以现有对象为基础创建新对象，并修改原型链
 ```javascript
-    a = {};
+    a = {}; //a = Object.create(Object.prototype);
     a.__proto__ = A.prototype
     A.call(a)
 ```
