@@ -46,6 +46,8 @@ JavaScript中只存在function级作用域,ES6支持let,const用于创建block�
 
 ![词法作用域](../imgs/JAVASCRIPT系列/词法作用域闭包/函数调用构造作用域链.png) <br/>
 ### 图解说明
+> 为了表示不同的运行环境，JavaScript中有一个执行上下文（Execution context，EC）的概念。也就是说，当JavaScript代码执行的时候，会进入不同的执行上下文，这些执行上下文就构成了一个执行上下文栈（Execution context stack，ECS）。
+
 
 ## 三、闭包closure
 ### 一些关于闭包的定义：
@@ -63,12 +65,78 @@ JavaScript中只存在function级作用域,ES6支持let,const用于创建block�
 >只有当inner function引用了外层的变量时，该closure才会创建,实质上是在function expicity(显示的)添加了一个closure 引用属性 指向上级作用域空间
 
 ## 四、闭包与内存管理
-### 函数执行过程
-[javascript函数执行过程](https://www.cnblogs.com/liugang-vip/p/6337580.html)
-d
-![词法作用域](../imgs/JAVASCRIPT系列/词法作用域闭包/垃圾回收.png)]
-![词法作用域](../imgs/JAVASCRIPT系列/词法作用域闭包/全局引用阻止内存回收.png)]
+### [函数执行过程](https://www.cnblogs.com/liugang-vip/p/6337580.html) 这是链接请点击查看
+* 执行上下文 EC
+  - javascript 函数在执行时，为了表示不同的运行环境，而创建的一个对象，里面包含 VO/AO,[[scope]]
+* 执行上下文栈 ECS
+* VO(Variable object) 
+* AO(Activation object)
+* 作用域链[[scope]]
+
+### 当一段JavaScript代码执行的时候，JavaScript解释器会创建Execution Context，其实这里会有两个阶段：
+
+* 创建阶段（当函数被调用，但是开始执行函数内部代码之前）
+    * 创建Scope chain
+    * 创建VO/AO（variables, functions and arguments）
+    * 设置this的值
+* 激活/代码执行阶段
+    * 设置变量的值、函数的引用，然后解释/执行代码
+``` javascript
+(function(){
+    console.log(bar); //在执行阶段，本地VA 及 [[scope]]未出现该变量
+    console.log(baz); //函数声明 baz 在本地的VA当中
+    
+    bar = 20; //运行时，沿着[[scope]]往上，直到global content，才创建了这个变量 bar
+    console.log(window.bar);
+    console.log(bar);
+    
+    function baz(){
+        console.log("baz");
+    }
+    
+})()
+//demo-02:
+(function(){
+    console.log(foo);
+    console.log(bar);
+    console.log(baz);
+    
+    var foo = function(){};
+    
+    function bar(){
+        console.log("bar");
+    }
+    
+    var bar = 20;
+    console.log(bar);
+    
+    function baz(){
+        console.log("baz");
+    }
+    
+})();
+/* 解释说明：
+在创建VO/AO过程中，解释器会先扫描函数声明，然后"foo: <function>"就被保存在了AO中；但解释器扫描变量声明的时候，虽然发现"var bar = 20;"，但是因为"foo"在AO中已经存在，所以就没有任何操作了。所以第一次打印是 function bar(){}
+*/
+```
+> 标记及清除：解决循环引用
+
+![闭包及垃圾回收](../imgs/JAVASCRIPT系列/词法作用域闭包/垃圾回收.png) <br/>
+
+---
+![内存泄漏示意图](../imgs/JAVASCRIPT系列/词法作用域闭包/全局引用阻止内存回收.png) <br/>
 
 ## 五、this动态绑定的特性 (call,apply,bind)
 
 > JavaScript中的函数运行在它们被**定义时的作用域里**,而不是它们被执行的作用域里。
+
+### 关于this解释
+* **this是执行上下文（Execution Context）的一个重要属性**，是一个与执行上下文相关的特殊对象。因此，它可以叫作上下文对象（也就是用来指明执行上下文是在哪个上下文中被触发的对象）。
+* **this不是变量对象（Variable Object）的一个属性**，所以跟变量不同，this从不会参与到标识符解析过程。也就是说，在代码中当访问this的时候，它的值是直接从执行上下文中获取的，并不需要任何作用域链查找。this的值只在进入上下文的时候进行一次确定。
+
+* 关于this最困惑的应该是，同一个函数，当在不同的上下文进行调用的时候，this的值就可能会不同。也就是说，this的值是通过函数调用表达式（也就是函数被调用的方式）的caller所提供的。
+
+### 总结
+在函数调用中，this是由激活上下文代码的调用者（caller）来提供的，即调用函数的父上下文(parent context )，也就是说this取决于调用函数的方式，指向调用时所在函数所绑定的对象。
+### 参考文章
+* http://www.cnblogs.com/wilber2013/p/4909505.html 
