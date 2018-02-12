@@ -45,12 +45,16 @@ const store = new Vuex.Store({
 2. mapGetters 将一个getter属性映射到本地**计算属性**ß当中
 
 ## 改变状态 mutation
+该函数 必须是同步执行的，只有它才能改变state 这便是约定的
+函数接收的参数是 state
+
 
 ## 异步改变状态 action
+出于架构的目的，因为action可以包含异步操作
 函数接受一个 与store对象相同的副本,{state,commit}
 this.$store.dispatch() 分发 action
 mapActions() 将方法 映射到 分发action
-dispatch() 返回Promise·
+dispatch() 返回Promise·,等所有的Action对应的
 
 ## Module
 命名空间
