@@ -65,7 +65,7 @@ JavaScript中只存在function级作用域,ES6支持let,const用于创建block�
 >只有当inner function引用了外层的变量时，该closure才会创建,实质上是在function expicity(显示的)添加了一个closure 引用属性 指向上级作用域空间
 
 ## 四、闭包与内存管理
-### [函数执行过程](https://www.cnblogs.com/liugang-vip/p/6337580.html) 这是链接请点击查看
+### [函数执行过程](http://www.cnblogs.com/wilber2013/p/4909505.html ) 这是链接请点击查看
 * 执行上下文 EC
   - javascript 函数在执行时，为了表示不同的运行环境，而创建的一个对象，里面包含 VO/AO,[[scope]]
 * 执行上下文栈 ECS
