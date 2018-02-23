@@ -132,9 +132,43 @@ JavaScript中只存在function级作用域,ES6支持let,const用于创建block�
 
 ### 关于this解释
 * **this是执行上下文（Execution Context）的一个重要属性**，是一个与执行上下文相关的特殊对象。因此，它可以叫作上下文对象（也就是用来指明执行上下文是在哪个上下文中被触发的对象）。
+
 * **this不是变量对象（Variable Object）的一个属性**，所以跟变量不同，this从不会参与到标识符解析过程。也就是说，在代码中当访问this的时候，它的值是直接从执行上下文中获取的，并不需要任何作用域链查找。this的值只在进入上下文的时候进行一次确定。
 
 * 关于this最困惑的应该是，同一个函数，当在不同的上下文进行调用的时候，this的值就可能会不同。也就是说，this的值是通过函数调用表达式（也就是函数被调用的方式）的caller所提供的。
+
+1. 作为对象方法调用 this表示方法所属对象
+2. 作为构造函数调用 this表示创建的新对象
+3. DOM event handler this表示当前的DOM对象
+
+```javascript
+//函数的三种调用形式
+func(p1, p2) 
+obj.child.method(p1, p2)
+func.call(context, p1, p2) // 先不讲 apply
+
+//只存在这一种调用形式
+func.call(context, p1, p2)
+//其他两种都是语法糖，可以等价地变为 call 形式：func(p1, p2) 等价于
+func.call(undefined, p1, p2) // undefined可以是 window对象
+
+obj.child.method(p1, p2) 等价于
+obj.child.method.call(obj.child, p1, p2)
+```
+
+### 箭头函数
+箭头函数在设计中使用的是Lexical this，即这个函数被创建时的this就是函数内部的this需要注意的是，这个函数创建时并不是一个读代码的人肉眼能看到这个函数的时候，很多人有这样的误解，比如这样的代码：
+```javascript
+function printThis() {
+  let print = () => console.log(this);
+  print();
+}
+
+printThis.call([1]);
+printThis.call([2]);
+```
+有些人会理解都一样，输出的是Window，因为看到print函数的时候是顶级作用域。**但其实print函数是在printThis被调用的时候才会被创建的**，而printThis的this由外部的call决定着，所以输出自然是[1]和[2]
+
 
 ### 总结
 在函数调用中，this是由激活上下文代码的调用者（caller）来提供的，即调用函数的父上下文(parent context )，也就是说this取决于调用函数的方式，指向调用时所在函数所绑定的对象。
