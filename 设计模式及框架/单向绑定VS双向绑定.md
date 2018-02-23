@@ -8,7 +8,13 @@
 UI-->modal: 绑定UI事件，改变vm中的值
 modal-->UI: VM对象上的 访问器属性 数据变动
 
-`
+```HTML
 <input type="text" v-bind:value="msg" v-on:input="msg = $event.target.value"> 
-`
+```
+
+## 实现双向绑定的方式
+1. 发布/订阅模式
+2. 属性劫持 Object.defineProperty
+3. 脏数据检测 watch方法维护了一个数据
+
 

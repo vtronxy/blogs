@@ -46,7 +46,10 @@ JavaScript中只存在function级作用域,ES6支持let,const用于创建block�
 
 ![词法作用域](../imgs/JAVASCRIPT系列/词法作用域闭包/函数调用构造作用域链.png) <br/>
 ### 图解说明
-> 为了表示不同的运行环境，JavaScript中有一个执行上下文（Execution context，EC）的概念。也就是说，当JavaScript代码执行的时候，会进入不同的执行上下文，这些执行上下文就构成了一个执行上下文栈（Execution context stack，ECS）。
+ 1. 为了表示不同的运行环境，JavaScript中有一个执行上下文（Execution context，EC）的概念。也就是说，当JavaScript代码执行的时候，会进入不同的执行上下文，这些执行上下文就构成了一个执行上下文栈（Execution context stack，ECS）
+ 
+ 2. **函数是在 调用的时候 才会去创建**
+
 
 
 ## 三、闭包closure
