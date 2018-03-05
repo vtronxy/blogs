@@ -7,7 +7,7 @@ Vuex使用**单一状态树** 集中式状态管理,单向数据流。一个应�
 3. 异步逻辑都应该封装到 action 里面。
 
 ## 状态state
->Vuex 通过 store 选项，提供了一种机制将状态从根组件“注入”到每一个子组件中（需调用 Vue.use(Vuex))
+>Vuex 通过 **store 选项**，提供了一种机制将状态从根组件“注入”到每一个子组件中（需调用 Vue.use(Vuex))
 1. Vuex 状态存储**响应式**,从store实例中读取状态的方法，在**计算属性**中返回某个状态
 ```javascript
     const Counter = {
@@ -20,7 +20,11 @@ Vuex使用**单一状态树** 集中式状态管理,单向数据流。一个应�
     }
 ```
 2. mapState 帮助生成计算属性,结合**扩展运算符** 使用 
+函数接收的参数 Array | Object
+mapState(['count']);
+mapState({
 
+})
 
 ## 状态的计算属性 Getter
 1. 会暴露为 store.getters.doneTodos,函数接收的参数 state
@@ -58,3 +62,4 @@ dispatch() 返回Promise·,等所有的Action对应的
 
 ## Module
 命名空间
+this.$store.[name]  这个name优先访问的是 模块的状态，如果全局的state中与这个[name]重名，那么 这个被 模块覆盖

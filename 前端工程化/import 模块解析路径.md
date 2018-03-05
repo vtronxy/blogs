@@ -27,8 +27,8 @@
 ## 模块的查找路径 resolve.modules
 逐级查找 node_modules目录
 
-## 在缺乏package.json时 使用resolve.mainFields
-当从 npm 包中导入模块时（例如，import * as D3 from "d3"），此选项将决定在 package.json 中使用哪个字段导入模块。根据 webpack 配置中指定的 target 不同，默认值也会有所不同。
+## 当不存在package.json时 使用resolve.mainFields(默认值是index)
+当从 npm 包中导入模块时（例如，import * as D3 from "d3"），此选项将决定在 **package.json** 中使用哪个字段导入模块。根据 webpack 配置中指定的 target 不同，默认值也会有所不同。
 
 当 target 属性设置为 webworker, web 或者没有指定，默认值为：
 
