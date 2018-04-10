@@ -2,6 +2,24 @@
 
 ## ajax工作原理
 - 1.使用new XMLHttpRequest/open() 来创建网络请求
+## ajax level 1
+- 受同源策略的限制，不能发送跨域请求；
+
+- 不能发送二进制文件（如图片、视频、音频等），只能发送纯文本数据；
+
+- 在发送和获取数据的过程中，无法实时获取进度信息，只能判断是否完成；
+
+## ajax level 2
+- 可以发送跨域请求，在服务端允许的情况下；
+
+- 支持发送和接收二进制数据；
+
+- 新增formData对象，支持发送表单数据；
+
+- 发送和获取数据时，可以获取进度信息；
+
+- 可以设置请求的超时时间；
+
 
 ```javascript
 //对于get请求（或凡涉及到url传递参数的），被传递的参数都要先经encodeURIComponent方法处理.
@@ -27,9 +45,10 @@ xhr.getAllResponseHeader()
   发送HTTP请求 注意这里是post方式，发生请求参数。get的方式直接是send(NULL)
 
 - 5.xhr常用属性及事件
+```javascript
   xhr.overrideMimeType('text/plain;charset=x-user-defined') //指定服务器返回的数据的Mime类型
  
-  xhr2才支持的属性，在这个属性不支持的时候，使用上面的方法替代
+  //xhr2才支持的属性，在这个属性不支持的时候，使用上面的方法替代
   xhr.responseType  //指定服务器返回的数据的类型
   xhr.responseText
   xhr.responseXML
@@ -42,8 +61,9 @@ xhr.getAllResponseHeader()
   onload  请求成功完成时触发
   ontimeout 自定义超时
   onloadend
+```
 
-  ## 跨域
+## 跨域
 
 > 可以发送请求，但浏览器会拒绝接受响应
 
@@ -61,3 +81,6 @@ Access-Control-Allow-Credentials:true  表示服务器明确许可，Cookie可�
 2. 复杂请求：
 
 OPTIONS：告诉WEB服务器 这是一个 "预检"(preflight) 请求
+
+## 参考文章
+https://segmentfault.com/a/1190000004322487 深入理解ajax
