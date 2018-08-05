@@ -63,10 +63,10 @@ td元素的特性：无论宽度多大都不会超出父容器的宽度，所以
 2. line-boxs形成高度
   一个div中如果没有指定高度，那么它的高度是由，里面的一个个的inline元素的“行高”决定，在div上使用line-height属性来影响。一系列的 inline元素的排列方式，默认是以base-line作为对齐基准，使用vertical-align属性来影响各个inline元素的排列方式。  
 3. line-height与 vertical-align
-vertical-align 的百分比值 是以line-height作为计算的基准。
+**vertical-align 的百分比值 是以line-height作为计算的基准。**
 font-size:0 解决inline-block水平方向“空隙” 以及垂直方向上与 baseline对齐的”空隙”。兼容性问题（Chrome最小字体大小 font-size：4px 目前60版本没有这个问题）
 letter-spacing:取负值 兼容性好
-幽灵空白节点
+[幽灵空白节点](http://www.zhangxinxu.com/wordpress/2015/08/css-deep-understand-vertical-align-and-line-height/)
 
 ## 浮动与定位
 
@@ -78,12 +78,12 @@ letter-spacing:取负值 兼容性好
 
 ### 二、脱离文档流：
 1. float元素：破坏了height，width属性还存在，所以能文字环绕，配合左侧的BFC，margin-*值还是可以影响相邻的元素。
-2. absolute：完全不占据文档流中 width及height，所以margin值不会把周边的元素推开
+2. absolute：完全不占据文档流中 width及height，margin值可以微调 absolute元素的位置，但是不会影响周边元素
 
 
 ### 三、absolute元素：
 不指定width、height使用top、right、bottom、left来拉伸盒子
-跟随性（无依赖的特性） 配合margin使用，带来位置的微调
+跟随性（无依赖的特性） 配合margin使用(**不会影响周边的元素**)，带来位置的微调
 使得overflow失效：1.hidden裁剪失效；2.使得滚动条失效（效果类似于fixed效果）
 
 含有overflow属性的元素 在 定位元素及包含块（[定位属性]的父元素如果没有则是body）之间，裁剪会失效.

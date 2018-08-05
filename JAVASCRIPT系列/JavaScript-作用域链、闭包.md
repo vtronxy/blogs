@@ -46,7 +46,12 @@ JavaScript中只存在function级作用域,ES6支持let,const用于创建block�
 
 ![词法作用域](../imgs/JAVASCRIPT系列/词法作用域闭包/函数调用构造作用域链.png) <br/>
 ### 图解说明
-> 为了表示不同的运行环境，JavaScript中有一个执行上下文（Execution context，EC）的概念。也就是说，当JavaScript代码执行的时候，会进入不同的执行上下文，这些执行上下文就构成了一个执行上下文栈（Execution context stack，ECS）。
+ 1. 为了表示不同的**运行环境**，JavaScript中有一个执行上下文（Execution context，EC）的概念。也就是说，当JavaScript代码执行的时候，会进入不同的执行上下文，这些执行上下文就构成了一个执行上下文栈（Execution context stack，ECS）
+ 
+ 2. **函数是在 调用的时候 才会去创建EC，函数调用结束销毁EC中的内容**
+
+ 3. VO/AO 标准中函数[pointer to Function] 会存在一个 __parent__ 属性指向当前的 VO,函数执行时
+
 
 
 ## 三、闭包closure
@@ -65,7 +70,7 @@ JavaScript中只存在function级作用域,ES6支持let,const用于创建block�
 >只有当inner function引用了外层的变量时，该closure才会创建,实质上是在function expicity(显示的)添加了一个closure 引用属性 指向上级作用域空间
 
 ## 四、闭包与内存管理
-### [函数执行过程](https://www.cnblogs.com/liugang-vip/p/6337580.html) 这是链接请点击查看
+### [函数执行过程](http://www.cnblogs.com/wilber2013/p/4909505.html ) 这是链接请点击查看
 * 执行上下文 EC
   - javascript 函数在执行时，为了表示不同的运行环境，而创建的一个对象，里面包含 VO/AO,[[scope]]
 * 执行上下文栈 ECS
@@ -116,7 +121,7 @@ JavaScript中只存在function级作用域,ES6支持let,const用于创建block�
     
 })();
 /* 解释说明：
-在创建VO/AO过程中，解释器会先扫描函数声明，然后"foo: <function>"就被保存在了AO中；但解释器扫描变量声明的时候，虽然发现"var bar = 20;"，但是因为"foo"在AO中已经存在，所以就没有任何操作了。所以第一次打印是 function bar(){}
+在创建VO/AO过程中，解释器会先扫描[函数声明]，然后"bar: <function>"就被保存在了AO中；但解释器扫描变量声明的时候，虽然发现"var bar = 20;"，但是因为"bar"在AO中已经存在，所以就没有任何操作了。所以第一次打印是 functio                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 n bar(){}
 */
 ```
 > 标记及清除：解决循环引用
@@ -132,9 +137,43 @@ JavaScript中只存在function级作用域,ES6支持let,const用于创建block�
 
 ### 关于this解释
 * **this是执行上下文（Execution Context）的一个重要属性**，是一个与执行上下文相关的特殊对象。因此，它可以叫作上下文对象（也就是用来指明执行上下文是在哪个上下文中被触发的对象）。
+
 * **this不是变量对象（Variable Object）的一个属性**，所以跟变量不同，this从不会参与到标识符解析过程。也就是说，在代码中当访问this的时候，它的值是直接从执行上下文中获取的，并不需要任何作用域链查找。this的值只在进入上下文的时候进行一次确定。
 
 * 关于this最困惑的应该是，同一个函数，当在不同的上下文进行调用的时候，this的值就可能会不同。也就是说，this的值是通过函数调用表达式（也就是函数被调用的方式）的caller所提供的。
+
+1. 作为对象方法调用 this表示方法所属对象
+2. 作为构造函数调用 this表示创建的新对象
+3. DOM event handler this表示当前的DOM对象
+
+```javascript
+//函数的三种调用形式
+func(p1, p2) 
+obj.child.method(p1, p2)
+func.call(context, p1, p2) // 先不讲 apply
+
+//只存在这一种调用形式
+func.call(context, p1, p2)
+//其他两种都是语法糖，可以等价地变为 call 形式：func(p1, p2) 等价于
+func.call(undefined, p1, p2) // undefined可以是 window对象
+
+obj.child.method(p1, p2) 等价于
+obj.child.method.call(obj.child, p1, p2)
+```
+
+### 箭头函数
+箭头函数在设计中使用的是Lexical this，即这个函数被创建时的this就是函数内部的this需要注意的是，这个函数创建时并不是一个读代码的人肉眼能看到这个函数的时候，很多人有这样的误解，比如这样的代码：
+```javascript
+function printThis() {
+  let print = () => console.log(this);
+  print();
+}
+
+printThis.call([1]);
+printThis.call([2]);
+```
+有些人会理解都一样，输出的是Window，因为看到print函数的时候是顶级作用域。**但其实print函数是在printThis被调用的时候才会被创建的**，而printThis的this由外部的call决定着，所以输出自然是[1]和[2]
+
 
 ### 总结
 在函数调用中，this是由激活上下文代码的调用者（caller）来提供的，即调用函数的父上下文(parent context )，也就是说this取决于调用函数的方式，指向调用时所在函数所绑定的对象。
