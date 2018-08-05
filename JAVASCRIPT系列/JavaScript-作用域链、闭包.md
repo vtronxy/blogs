@@ -77,17 +77,17 @@ JavaScript中只存在function级作用域,ES6支持let,const用于创建block�
 
 * 创建阶段（当函数被调用，但是开始执行函数内部代码之前）
     * 创建Scope chain
-    * 创建VO/AO（variables, functions and arguments）
+    * 创建VO/AO（variables, functions and arguments）**变量提升**
     * 设置this的值
 * 激活/代码执行阶段
     * 设置变量的值、函数的引用，然后解释/执行代码
 ``` javascript
 (function(){
-    console.log(bar); //在执行阶段，本地VA 及 [[scope]]未出现该变量
-    console.log(baz); //函数声明 baz 在本地的VA当中
+    console.log(bar); //在执行阶段，本地VA 及 [[scope]]未出现该变量 -->output:undefined
+    console.log(baz); //函数声明 baz 在本地的VA当中 -->打印函数
     
     bar = 20; //运行时，沿着[[scope]]往上，直到global content，才创建了这个变量 bar
-    console.log(window.bar);
+    console.log(window.bar);//执行到这一句，全局变量 bar已经创建 -->output:20
     console.log(bar);
     
     function baz(){
