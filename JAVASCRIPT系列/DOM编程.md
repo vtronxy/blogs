@@ -1,4 +1,13 @@
 # DOM编程基础
+
+## DOM大小及位置 client,offset,scroll
+
+## addEventListener添加事件handle
+> 通过 addEventListener() 来添加的匿名函数无法移除
+
+## removeChild与绑定的事件Handler
+
+
 ## 统计页面中节点数目
 ```javascript
 function countNodes(node) {
@@ -19,3 +28,7 @@ function countNodes(node) {
 //使用方法
 countNodes(document.body);
 ```
+## 参考链接
+* https://www.w3cplus.com/javascript/offset-scroll-client.html DOM位置及大小
+* https://segmentfault.com/q/1010000008962585 removeChild 与绑定的event handler
+* https://www.zhihu.com/question/35335233 addEventListener添加匿名函数
