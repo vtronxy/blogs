@@ -1,5 +1,11 @@
 # DOM编程基础
+
+## appendChild
+
+> 如果参数节点Node已经
+
 ## 统计页面中节点数目
+
 ```javascript
 function countNodes(node) {
     //  计算自身
