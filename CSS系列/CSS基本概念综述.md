@@ -14,7 +14,9 @@
 > 1. tr、td与css耦合的太紧密，嵌套太多层语义不清晰
 > 2. 表格里面的内容需要等待页面上的资源(img,js,样式表)加载完毕后才显示
 + table的优势：
-> 1. table是具备包裹性的 block元素；同行等高，同列等宽，常用于多列布局。
+> 1. table是具备包裹性的block元素;
+> 2. 同行等高，同列等宽，所有的td会自动的沾满table宽度常用于自适应多列布局。
+> 2. td同时具备text-center 与vertical-align两个属性可实现垂直水平居中
 
 
 + 父元素display:table ,子元素 display:table-cell ，孩子产生父节点display:row的匿名节点
@@ -31,7 +33,7 @@
 右边自适应-->左边float右边BFC化，使用padding-left控制间距(margin-left会出现”鞭长莫及”的情况)
 左边自适应--> 左边float width：100% 使用padding-right/margin-right预留空间，右边float，并且width 及负margin 值相同，那么可以把这个float块拉上去
 
-td元素的特性：无论宽度多大都不会超出父容器的宽度，所以经常设置 width:9999px 来做自适应布局。
+td元素的特性：是在table-layout:auto(默认值)情况下，无论宽度多大都不会超出父容器的宽度，所以经常设置 width:9999px 来做自适应布局。
 
 把float:left的兄弟节点设置为display:table-cell 或者 overflow:auto(这是利用了BFC特性)可以做到两栏自适应布局
 ```
@@ -89,8 +91,10 @@ letter-spacing:取负值 兼容性好
 含有overflow属性的元素 在 定位元素及包含块（[定位属性]的父元素如果没有则是body）之间，裁剪会失效.
 解决方案：使 含有overflow属性的元素，成为绝对定位
 
-css：attr() 获取HTML上的属性值
+css：attr() 获取HTML上的属性值，可以配合伪元素使用::before的content属性
 
 不指定width/height 的absolute元素通过left/top/right/bottom拉伸后，其子元素的width/height可以使用百分比作为
 
+## 参考链接
+* https://x-front-team.github.io/2017/04/25/table-layout%E7%90%86%E8%A7%A3%E5%88%B0%E6%94%BE%E5%BC%83/ table-layout理解
 
