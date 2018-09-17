@@ -9,6 +9,7 @@
 
 
 ## 统计页面中节点数目
+
 ```javascript
 function countNodes(node) {
     //  计算自身
