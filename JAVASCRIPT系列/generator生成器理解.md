@@ -25,7 +25,7 @@
 {next:function(){}},
 next方法返回 {value,done}
 
-## for-of /Array.from/ spread operator
+## for-of / Array.from / spread operator
 
 调用对象的 myObject[Symbol.iterator].next(); 直到返回{value:undefined,done:true}
 

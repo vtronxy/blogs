@@ -25,7 +25,6 @@ function countNodes(node) {
     }
     return count;
 }
-
 //使用方法
 countNodes(document.body);
 ```
@@ -33,3 +32,5 @@ countNodes(document.body);
 * https://www.w3cplus.com/javascript/offset-scroll-client.html DOM位置及大小
 * https://segmentfault.com/q/1010000008962585 removeChild 与绑定的event handler
 * https://www.zhihu.com/question/35335233 addEventListener添加匿名函数
+* https://x-front-team.github.io/2017/04/25/table-layout%E7%90%86%E8%A7%A3%E5%88%B0%E6%94%BE%E5%BC%83/ table-layout属性的解释
+

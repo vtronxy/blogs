@@ -3,6 +3,11 @@
 Vuex使用**单一状态树** 集中式状态管理,单向数据流。一个应用只有一个全局单例的store对象
 各个组件内部使用 this.$store访问该对象
 
+vue-router是对app页面呈现状态的管理，一个URL表示相应的一个状态
+vuex 实现了前端的有限状态机
+dispatch --> action --> commit 来实现状态的改变
+mapState 和 mapGetters 来获取最新的状态
+
 ## Vuex编码规则
 
 1. 应用层级的状态应该集中到单个 store 对象中。
@@ -13,7 +18,7 @@ Vuex使用**单一状态树** 集中式状态管理,单向数据流。一个应�
 
 >Vuex 通过 **store 选项**，提供了一种机制将状态从根组件“注入”到每一个子组件中（需调用 Vue.use(Vuex))
 
-1. Vuex 状态存储**响应式**,从store实例中读取状态的方法，在**计算属性**中返回某个状态
+1. Vuex 状态存储**响应式**,从store实例中读取状态的方法，在 **计算属性** 中返回某个状态
 
 ```javascript
     const Counter = {
@@ -76,4 +81,4 @@ dispatch() 返回Promise·,等所有的Action对应的
 ## Module
 
 命名空间
-this.$store.[name]  这个name优先访问的是 模块的状态，如果全局的state中与这个[name]重名，那么 这个被 模块覆盖
+this.$store.[name]  这个name优先访问的是 模块的状态，如果全局的state中与这个[name]重名，那么这个被模块覆盖
