@@ -28,9 +28,10 @@ const router = new VueRouter({
 });
 ```
 
-## 权限认证跳转死循环
+## 前端权限认证跳转死循环
 
 ```javascript
+//这里的登录标识，使用 vuex配合localstorage来实现
 router.beforeEach((to, from, next) => {
   if (登录) {
     //执行队列中的下一个钩子函数，不会触发beforeEach
@@ -56,6 +57,12 @@ router.afterEach((to, from) => {
 ```
 
 ## 权限认证的动态路由 addRouter
+
+### 方式一：
+- 前端路由meta配置和beforeEach路由守卫来控制权限页面跳转 && 配合axios request拦截器发送token
+- 使用axios response拦截器，配合服务器端，判断token是否失效
+
+### 方式二：
 
 ## 缓存路由组件
 
@@ -132,3 +139,8 @@ deactivated:
 mounted:
 activated:
 执行beforeRouteEnter回调函数next，cb(vm)以参数的形式拿到vm对象
+
+被<keep-alive>包裹的组件，会多出 activated/deactivated两个生命周期
+
+## 参考链接
+* https://github.com/superman66/vue-axios-github 权限控制

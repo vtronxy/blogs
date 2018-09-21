@@ -19,6 +19,7 @@ mapState 和 mapGetters 来获取最新的状态
 >Vuex 通过 **store 选项**，提供了一种机制将状态从根组件“注入”到每一个子组件中（需调用 Vue.use(Vuex))
 
 1. Vuex 状态存储**响应式**,从store实例中读取状态的方法，在 **计算属性** 中返回某个状态
+mapActions、mapStates、mapGetters映射为简便的
 
 ```javascript
     const Counter = {
@@ -73,10 +74,10 @@ const store = new Vuex.Store({
 ## 异步改变状态 action
 
 出于架构的目的，因为action可以包含异步操作
-函数接受一个 与store对象相同的副本,{state,commit}
+函数接受一个 **与store对象相同的副本**,使用结构赋值接受里面的参数{state,commit}
 this.$store.dispatch() 分发 action
 mapActions() 将方法 映射到 分发action
-dispatch() 返回Promise·,等所有的Action对应的
+dispatch()返回Promise·,等所有的Action对应的handler处理完毕后，dispatch返回的promise才变为resolve
 
 ## Module
 
